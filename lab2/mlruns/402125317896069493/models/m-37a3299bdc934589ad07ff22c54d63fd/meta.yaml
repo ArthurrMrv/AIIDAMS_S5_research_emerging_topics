@@ -1,0 +1,10 @@
+artifact_location: file:///Users/arthurmrv/Library/Mobile%20Documents/com~apple~CloudDocs/Documents/School/AIDAMS/S5/research_and_emerging_topics/lab2/mlruns/402125317896069493/models/m-37a3299bdc934589ad07ff22c54d63fd/artifacts
+creation_timestamp: 1761401279233
+experiment_id: '402125317896069493'
+last_updated_timestamp: 1761401281201
+model_id: m-37a3299bdc934589ad07ff22c54d63fd
+model_type: null
+name: model
+source_run_id: 13fc287746d942e48156dbd699da9b30
+status: 2
+status_message: null

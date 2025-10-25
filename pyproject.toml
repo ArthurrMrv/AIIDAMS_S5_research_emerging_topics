@@ -1,0 +1,31 @@
+[project]
+name = "research-and-emerging-topics"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "ipykernel>=7.0.1",
+    "ipython>=9.6.0",
+    "joblib>=1.5.2",
+    "matplotlib>=3.10.7",
+    "mlflow>=3.5.1",
+    "numpy>=1.21.0",
+    "openpyxl>=3.1.5",
+    "optuna>=4.5.0",
+    "pandas>=1.5.0",
+    "pathlib>=1.0.1",
+    "pexpect>=4.9.0",
+    "plotly>=5.15.0",
+    "pyspark>=4.0.1",
+    "requests>=2.32.5",
+    "scikit-learn>=1.7.2",
+    "seaborn>=0.13.2",
+    "streamlit>=1.28.0",
+    "tqdm>=4.67.1",
+]
+
+[dependency-groups]
+dev = [
+    "ipykernel>=7.0.1",
+]

@@ -1,0 +1,14 @@
+artifact_uri: file:///Users/arthurmrv/Library/Mobile%20Documents/com~apple~CloudDocs/Documents/School/AIDAMS/S5/research_and_emerging_topics/lab2/mlruns/402125317896069493/13fc287746d942e48156dbd699da9b30/artifacts
+end_time: 1761401281214
+entry_point_name: ''
+experiment_id: '402125317896069493'
+lifecycle_stage: active
+run_id: 13fc287746d942e48156dbd699da9b30
+run_name: Tuned Random Forest
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1761401279042
+status: 3
+tags: []
+user_id: arthurmrv
