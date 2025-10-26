@@ -1,32 +1,35 @@
 {
   "model_type": "RandomForestRegressor",
   "best_params": {
-    "n_estimators": 50,
+    "n_estimators": 100,
     "min_samples_split": 2,
     "min_samples_leaf": 1,
-    "max_depth": 10
+    "max_depth": 20
   },
   "feature_columns": [
     "2019",
     "2020",
     "2021",
     "2022",
-    "scaled_log_Nominal crude steel capacity (ttpa)",
-    "scaled_log_Nominal BOF steel capacity (ttpa)",
-    "scaled_log_Nominal EAF steel capacity (ttpa)",
-    "scaled_log_Other/unspecified steel capacity (ttpa)",
-    "scaled_log_Nominal iron capacity (ttpa)",
-    "scaled_log_Nominal BF capacity (ttpa)",
-    "scaled_log_Nominal DRI capacity (ttpa)",
-    "scaled_log_Other/unspecified iron capacity (ttpa)",
-    "scaled_log_Nominal OHF steel capacity (ttpa)",
-    "scaled_log_Workforce size",
-    "scaled_log_Plant age (years)",
-    "scaled_log_capacity_per_worker",
-    "scaled_log_capacity_x_age"
+    "scaled_sqrt_Nominal crude steel capacity (ttpa)",
+    "scaled_sqrt_Nominal BOF steel capacity (ttpa)",
+    "scaled_Nominal EAF steel capacity (ttpa)",
+    "scaled_sqrt_Other/unspecified steel capacity (ttpa)",
+    "scaled_sqrt_Nominal iron capacity (ttpa)",
+    "scaled_sqrt_Nominal BF capacity (ttpa)",
+    "scaled_sqrt_Nominal DRI capacity (ttpa)",
+    "scaled_sqrt_Other/unspecified iron capacity (ttpa)",
+    "scaled_Nominal OHF steel capacity (ttpa)",
+    "scaled_sqrt_Workforce size",
+    "scaled_Plant age (years)",
+    "scaled_sqrt_2019",
+    "scaled_sqrt_2020",
+    "scaled_sqrt_2021",
+    "scaled_sqrt_2022",
+    "scaled_sqrt_2023"
   ],
-  "test_rmse": 1333.3815563193134,
-  "test_mae": 487.5995608833224,
-  "test_r2": 0.9101487356120118,
-  "training_date": "2025-10-25 16:31:15"
+  "test_rmse": 175.17368038078143,
+  "test_mae": 69.84574074074077,
+  "test_r2": 0.9949204756513561,
+  "training_date": "2025-10-26 21:28:47"
 }
