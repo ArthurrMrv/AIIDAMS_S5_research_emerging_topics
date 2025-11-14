@@ -1,0 +1,170 @@
+lab3/
+│
+├── 📋 Configuration & Core Modules
+│   ├── config.py                      (185 lines) - All constants, parameters, emission factors
+│   ├── data_loader.py                 (260 lines) - Data loading and preprocessing
+│   ├── plant_operations.py            (291 lines) - Operational status (2020-2030)
+│   ├── utilization.py                 (371 lines) - Production calculation with utilization rates
+│   ├── emissions.py                   (388 lines) - Emissions calculation with emission factors
+│   ├── aggregation.py                 (441 lines) - Company-level aggregation
+│   └── projection.py                  (498 lines) - Future emissions projection
+│
+├── 🚀 Execution & Examples
+│   ├── main.py                        (276 lines) - Main orchestration script with CLI
+│   └── example_usage.py               (220 lines) - 5 practical usage examples
+│
+├── 📚 Documentation
+│   ├── README.md                      (376 lines) - Comprehensive project documentation
+│   ├── IMPLEMENTATION_SUMMARY.md      (438 lines) - Implementation details and summary
+│   └── requirements.txt               (12 lines)  - Python dependencies
+│
+├── 🔧 Supporting Files
+│   └── .gitignore                     (45 lines)  - Version control ignore rules
+│
+└── 📊 Output Directory
+    └── output/                         (empty, ready for generated CSVs)
+
+TOTAL: 13 files, ~3,500+ lines of code and documentation
+
+═══════════════════════════════════════════════════════════════════
+                        MODULE DEPENDENCIES
+═══════════════════════════════════════════════════════════════════
+
+config.py (base configuration)
+    ↓
+data_loader.py → imports config
+    ↓
+plant_operations.py → imports config, data_loader
+    ↓
+utilization.py → imports config, data_loader, plant_operations
+    ↓
+emissions.py → imports config, utilization
+    ↓
+aggregation.py → imports config, emissions
+    ↓
+projection.py → imports config, aggregation
+    ↓
+main.py → imports ALL modules and orchestrates pipeline
+example_usage.py → imports modules as needed for examples
+
+═══════════════════════════════════════════════════════════════════
+                        ANALYSIS PIPELINE
+═══════════════════════════════════════════════════════════════════
+
+1. DATA LOADING          [data_loader.py]
+   └→ Load operating_plants.csv from lab1
+   └→ Clean dates, capacity, technology
+   └→ Filter to China
+
+2. OPERATIONAL STATUS    [plant_operations.py]
+   └→ Determine operational plants per year (2020-2030)
+   └→ Handle start/end dates
+   └→ Create plant-year dataset
+
+3. PRODUCTION            [utilization.py]
+   └→ Apply utilization rates (tech-specific)
+   └→ Calculate: Production = Capacity × Utilization
+   └→ Validate against national statistics
+
+4. EMISSIONS             [emissions.py]
+   └→ Assign emission factors by technology
+   └→ Calculate: Emissions = Production × Factor
+   └→ Export detailed summaries
+
+5. AGGREGATION           [aggregation.py]
+   └→ Aggregate to company-year level
+   └→ Calculate company totals
+   └→ Technology mix analysis
+
+6. PROJECTION            [projection.py]
+   └→ Project future emissions (2031+)
+   └→ Multiple methods (linear, exp, MA)
+   └→ Uncertainty quantification (95% CI)
+
+═══════════════════════════════════════════════════════════════════
+                     KEY CONFIGURATION VALUES
+═══════════════════════════════════════════════════════════════════
+
+TARGET COUNTRY: China
+YEARS: 2020-2030 (11 years)
+
+UTILIZATION RATES (Technology-Specific):
+  BF-BOF: 85% (2020) → 75% (2030)  [declining, high emissions]
+  EAF:    75% (2020) → 85% (2030)  [increasing, low emissions]
+
+EMISSION FACTORS (tonnes CO2 per tonne steel):
+  BF-BOF: 2.0  (Blast Furnace - Basic Oxygen Furnace)
+  EAF:    0.5  (Electric Arc Furnace)
+  DRI:    1.5  (Direct Reduced Iron)
+  Other:  1.8  (Unknown/Other technologies)
+
+DATA SOURCES:
+  Production:  World Steel Association
+  Capacity:    OECD Steel Capacity Report
+  Factors:     Hasanbeigi et al. (2016)
+  Plants:      Global Steel Plant Tracker (Lab 1)
+
+═══════════════════════════════════════════════════════════════════
+                        OUTPUT FILES (9)
+═══════════════════════════════════════════════════════════════════
+
+1. operational_plants_2020_2030.csv     Plant-year operational records
+2. china_plant_production.csv           Plant production with utilization
+3. china_plant_emissions.csv            Plant emissions with factors
+4. company_emissions.csv                Company-year aggregations
+5. company_emissions_total.csv          Total company emissions
+6. emissions_by_year.csv                Annual summaries
+7. emissions_by_technology.csv          Technology breakdowns
+8. emissions_by_company.csv             Company rankings
+9. emissions_projection.csv             Future projections with CI
+
+═══════════════════════════════════════════════════════════════════
+                         HOW TO USE
+═══════════════════════════════════════════════════════════════════
+
+INSTALLATION:
+  $ cd lab3
+  $ pip install -r requirements.txt
+
+RUN COMPLETE ANALYSIS:
+  $ python main.py
+
+CUSTOM OPTIONS:
+  $ python main.py --skip-projection
+  $ python main.py --projection-years 2031 2032 2033
+  $ python main.py --projection-method exponential
+  $ python main.py --no-tech-rates
+
+TEST INDIVIDUAL MODULES:
+  $ python data_loader.py
+  $ python plant_operations.py
+  $ python utilization.py
+  $ python emissions.py
+  $ python aggregation.py
+  $ python projection.py
+
+RUN EXAMPLES:
+  $ python example_usage.py
+
+═══════════════════════════════════════════════════════════════════
+                      FEATURES & HIGHLIGHTS
+═══════════════════════════════════════════════════════════════════
+
+✅ Function-oriented, modular architecture
+✅ Comprehensive documentation (inline + external)
+✅ Technology-specific emission factors
+✅ Granular utilization rates by technology
+✅ Validation against national statistics
+✅ Multiple projection methods
+✅ Uncertainty quantification (bootstrap, CI)
+✅ Company-level tracking and ranking
+✅ Temporal analysis (2020-2030)
+✅ Command-line interface
+✅ Example usage scripts
+✅ Error handling and validation
+✅ Professional code quality
+✅ Extensible design
+
+═══════════════════════════════════════════════════════════════════
+                     STATUS: ✅ COMPLETE
+═══════════════════════════════════════════════════════════════════
