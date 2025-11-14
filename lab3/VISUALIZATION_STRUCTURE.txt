@@ -1,0 +1,128 @@
+═══════════════════════════════════════════════════════════════════
+                      VISUALIZATION FEATURES
+═══════════════════════════════════════════════════════════════════
+
+8 PLOT TYPES:
+  1. emissions_by_year.png         - Annual trends + intensity
+  2. emissions_by_technology.png   - Stacked area + share
+  3. top_emitters.png             - Top 10 companies bar chart
+  4. company_trends.png           - Multi-line time series
+  5. capacity_utilization.png     - Capacity vs production
+  6. technology_transition.png    - Technology mix evolution
+  7. emission_factors.png         - Distribution by technology
+  8. emissions_projections.png    - Future projections with CI
+
+SPECIFICATIONS:
+  - Format: PNG
+  - Resolution: 300 DPI (publication quality)
+  - Style: Seaborn-based professional styling
+  - Output: output/plots/ directory
+
+═══════════════════════════════════════════════════════════════════
+                           USAGE
+═══════════════════════════════════════════════════════════════════
+
+AUTOMATIC (via main.py):
+  $ python main.py
+  # Generates all plots automatically
+
+SKIP PLOTS:
+  $ python main.py --skip-plots
+  # Runs analysis without visualization
+
+TEST VISUALIZATION:
+  $ python visualization.py
+  # Test visualization module independently
+
+PROGRAMMATIC:
+  from visualization import create_all_plots
+  figures = create_all_plots(
+      df_operational, df_production, df_emissions,
+      df_company_year, df_company_total, df_projections
+  )
+
+INDIVIDUAL PLOTS:
+  from visualization import plot_emissions_by_year
+  fig = plot_emissions_by_year(df_emissions, save=True)
+
+═══════════════════════════════════════════════════════════════════
+                      KEY FUNCTIONS
+═══════════════════════════════════════════════════════════════════
+
+Core Functions:
+  - plot_emissions_by_year()
+  - plot_emissions_by_technology()
+  - plot_top_emitters()
+  - plot_company_trends()
+  - plot_projections()
+  - plot_capacity_utilization()
+  - plot_technology_transition()
+  - plot_emission_factors_distribution()
+  - create_all_plots() - Master function
+
+Utility Functions:
+  - setup_plot_style() - Configure matplotlib/seaborn
+  - save_figure() - Save with consistent settings
+
+═══════════════════════════════════════════════════════════════════
+                       PLOT EXAMPLES
+═══════════════════════════════════════════════════════════════════
+
+1. EMISSIONS BY YEAR:
+   [Line plot] Total emissions over time
+   [Line plot] Emissions intensity trend
+   Shows: Temporal emission patterns
+
+2. EMISSIONS BY TECHNOLOGY:
+   [Stacked area] Absolute emissions by tech
+   [Area plot] Percentage share evolution
+   Shows: Technology contribution to emissions
+
+3. TOP EMITTERS:
+   [Horizontal bars] Top 10 companies
+   Color gradient: Light to dark red
+   Shows: Company ranking by emissions
+
+4. COMPANY TRENDS:
+   [Multi-line] Top 5 companies over time
+   Different colors per company
+   Shows: Comparative emission trajectories
+
+5. PROJECTIONS:
+   [Line + shaded] Historical + future
+   95% confidence intervals
+   Shows: Uncertainty in future emissions
+
+6. CAPACITY & UTILIZATION:
+   [Line + fill] Capacity vs production
+   [Line] Utilization rate trend
+   Shows: Production efficiency
+
+7. TECHNOLOGY TRANSITION:
+   [Stacked bars] Technology capacity
+   [Line] Technology share %
+   Shows: Shift from BF-BOF to EAF
+
+8. EMISSION FACTORS:
+   [Box plots] Distribution by technology
+   [Histograms] Factor frequency
+   Shows: Technology emission intensity
+
+═══════════════════════════════════════════════════════════════════
+                     CUSTOMIZATION OPTIONS
+═══════════════════════════════════════════════════════════════════
+
+Plot Parameters:
+  - n: Number of items (companies, etc.)
+  - save: Boolean to save figure
+  - companies: List of specific companies
+  - output_dir: Custom save directory
+
+Style Customization:
+  plt.style.use('seaborn-v0_8-darkgrid')
+  plt.rcParams['figure.figsize'] = (12, 6)
+  plt.rcParams['font.size'] = 10
+
+Color Schemes:
+  - Default: Seaborn "husl" palette
+  - Customizable via seaborn color palettes

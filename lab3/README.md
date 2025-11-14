@@ -51,11 +51,14 @@ pip install -r requirements.txt
 
 ### Running the Analysis
 ```bash
-# Run complete analysis
+# Run complete analysis (with plots)
 python main.py
 
 # Skip projection step
 python main.py --skip-projection
+
+# Skip visualization plots
+python main.py --skip-plots
 
 # Custom projection years
 python main.py --projection-years 2031 2032 2033 2034 2035
@@ -65,6 +68,9 @@ python main.py --projection-method exponential
 
 # Don't use technology-specific rates
 python main.py --no-tech-rates
+
+# Combine options
+python main.py --projection-method exponential --skip-plots
 ```
 
 ## 📁 Project Structure
@@ -78,7 +84,9 @@ lab3/
 ├── emissions.py                # Emissions calculation
 ├── aggregation.py              # Company-level aggregation
 ├── projection.py               # Future emissions projection
+├── visualization.py            # Plotting and visualizations
 ├── main.py                     # Main orchestration script
+├── example_usage.py            # Usage examples
 ├── requirements.txt            # Python dependencies
 ├── README.md                   # This file
 └── output/                     # Generated output files
@@ -89,7 +97,16 @@ lab3/
     ├── emissions_by_year.csv
     ├── emissions_by_technology.csv
     ├── emissions_by_company.csv
-    └── emissions_projection.csv
+    ├── emissions_projection.csv
+    └── plots/                  # Visualization outputs
+        ├── emissions_by_year.png
+        ├── emissions_by_technology.png
+        ├── top_emitters.png
+        ├── company_trends.png
+        ├── capacity_utilization.png
+        ├── technology_transition.png
+        ├── emission_factors.png
+        └── emissions_projections.png
 ```
 
 ## 🔧 Module Descriptions
@@ -143,6 +160,18 @@ Project future emissions:
 - `bootstrap_projection()`: Uncertainty quantification
 - `project_all_companies()`: Batch projection
 
+### visualization.py
+Create comprehensive plots and visualizations:
+- `plot_emissions_by_year()`: Annual emissions trends
+- `plot_emissions_by_technology()`: Technology-specific emissions
+- `plot_top_emitters()`: Top emitting companies
+- `plot_company_trends()`: Company-specific time series
+- `plot_projections()`: Future projections with uncertainty
+- `plot_capacity_utilization()`: Capacity and utilization trends
+- `plot_technology_transition()`: Technology mix evolution
+- `plot_emission_factors_distribution()`: Emission factor analysis
+- `create_all_plots()`: Generate complete visualization suite
+
 ### main.py
 Orchestration script that runs the complete pipeline.
 
@@ -179,6 +208,17 @@ Total company emissions (all years).
 ### 8. emissions_projection.csv
 Future emissions projections with confidence intervals.
 **Columns**: company + year + projected_emissions + lower_bound + upper_bound
+
+### 9. plots/ directory
+Visualization outputs (PNG format, 300 DPI):
+- **emissions_by_year.png**: Total emissions and intensity trends
+- **emissions_by_technology.png**: Stacked area and share by technology
+- **top_emitters.png**: Horizontal bar chart of top 10 companies
+- **company_trends.png**: Multi-line plot of company emissions over time
+- **capacity_utilization.png**: Capacity vs production and utilization rates
+- **technology_transition.png**: Technology capacity evolution
+- **emission_factors.png**: Distribution and boxplots by technology
+- **emissions_projections.png**: Historical + projected with confidence intervals
 
 ## 📊 Key Results
 
@@ -264,6 +304,61 @@ python aggregation.py
 
 # Test projections
 python projection.py
+
+# Test visualizations
+python visualization.py
+```
+
+## 📊 Visualizations
+
+The `visualization.py` module creates publication-quality plots using matplotlib and seaborn:
+
+### Available Plots
+
+1. **Emissions Trends** (`plot_emissions_by_year`)
+   - Line plot of total annual emissions
+   - Emissions intensity over time
+   
+2. **Technology Analysis** (`plot_emissions_by_technology`)
+   - Stacked area chart of emissions by technology
+   - Technology share evolution
+   
+3. **Company Rankings** (`plot_top_emitters`)
+   - Horizontal bar chart of top emitters
+   - Color-coded by emission level
+   
+4. **Company Trends** (`plot_company_trends`)
+   - Multi-line time series for top companies
+   - Comparative emissions trajectories
+   
+5. **Projections** (`plot_projections`)
+   - Historical data + future projections
+   - 95% confidence intervals shaded
+   
+6. **Capacity & Utilization** (`plot_capacity_utilization`)
+   - Capacity vs production over time
+   - Utilization rate trends
+   
+7. **Technology Transition** (`plot_technology_transition`)
+   - Technology capacity evolution
+   - Share of total capacity
+   
+8. **Emission Factors** (`plot_emission_factors_distribution`)
+   - Boxplots by technology
+   - Distribution histograms
+
+### Customization
+
+All plots can be customized through function parameters:
+```python
+from visualization import plot_emissions_by_year
+
+# Create custom plot
+fig = plot_emissions_by_year(df_emissions, save=False)
+plt.show()
+
+# Or save with custom settings
+fig = plot_emissions_by_year(df_emissions, save=True)
 ```
 
 ## 📚 Learning Objectives

@@ -8,9 +8,10 @@ This script orchestrates the complete analysis pipeline:
 4. Calculate plant-level emissions using emission factors
 5. Aggregate emissions at company level
 6. Project company emissions into the future
+7. Create visualization plots
 
 Usage:
-    python main.py [--skip-projection] [--projection-years 2031 2032 2033]
+    python main.py [--skip-projection] [--skip-plots] [--projection-years 2031 2032 2033]
 """
 
 import argparse
@@ -47,6 +48,9 @@ from projection import (
     print_projection_summary,
     save_projections
 )
+from visualization import (
+    create_all_plots
+)
 
 
 def print_header(title: str) -> None:
@@ -58,6 +62,7 @@ def print_header(title: str) -> None:
 
 def run_full_analysis(projection_years: list = None, 
                      skip_projection: bool = False,
+                     skip_plots: bool = False,
                      use_technology_rates: bool = True,
                      projection_method: str = 'linear') -> dict:
     """
@@ -69,6 +74,8 @@ def run_full_analysis(projection_years: list = None,
         Years to project emissions. If None, uses default.
     skip_projection : bool
         If True, skips the projection step.
+    skip_plots : bool
+        If True, skips the visualization step.
     use_technology_rates : bool
         If True, uses technology-specific utilization rates.
     projection_method : str
@@ -157,6 +164,30 @@ def run_full_analysis(projection_years: list = None,
         print_header("STEP 6: PROJECTION SKIPPED")
         print("Projection step was skipped as requested.")
     
+    # ========== STEP 7: Create visualizations ==========
+    if not skip_plots:
+        print_header("STEP 7: CREATE VISUALIZATIONS")
+        
+        df_proj = results.get('projections', None)
+        
+        try:
+            figures = create_all_plots(
+                df_operational,
+                df_production,
+                df_emissions,
+                df_company_year,
+                df_company_total,
+                df_projections=df_proj,
+                save=True
+            )
+            results['figures'] = figures
+        except Exception as e:
+            print(f"Warning: Could not create all plots: {e}")
+            print("Continuing with analysis...")
+    else:
+        print_header("STEP 7: VISUALIZATION SKIPPED")
+        print("Visualization step was skipped as requested.")
+    
     # ========== Summary ==========
     end_time = datetime.now()
     duration = (end_time - start_time).total_seconds()
@@ -172,6 +203,10 @@ def run_full_analysis(projection_years: list = None,
     print(f"  4. {config.COMPANY_EMISSIONS_FILE}")
     if not skip_projection:
         print(f"  5. {config.PROJECTION_FILE}")
+    if not skip_plots:
+        import os
+        plots_dir = os.path.join(config.OUTPUT_DIR, 'plots')
+        print(f"  6. Visualization plots in {plots_dir}/")
     
     print("\nKey Results:")
     print(f"  Total plants analyzed: {len(df_steel)}")
@@ -204,6 +239,11 @@ def main():
         help='Skip the emissions projection step'
     )
     parser.add_argument(
+        '--skip-plots',
+        action='store_true',
+        help='Skip the visualization plots step'
+    )
+    parser.add_argument(
         '--projection-years',
         nargs='+',
         type=int,
@@ -230,6 +270,7 @@ def main():
         results = run_full_analysis(
             projection_years=args.projection_years,
             skip_projection=args.skip_projection,
+            skip_plots=args.skip_plots,
             use_technology_rates=not args.no_tech_rates,
             projection_method=args.projection_method
         )
